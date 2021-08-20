@@ -13,5 +13,7 @@ namespace InfocusCase.Entity.Concrete
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public string Gender{ get; set; }
+        public List<PersonAddress> PersonAddresses { get; set; }
+        public List<PersonTask> PersonTasks { get; set; }
     }
 }

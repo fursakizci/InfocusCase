@@ -12,5 +12,6 @@ namespace InfocusCase.Entity.Concrete
         public Person Person { get; set; }
         public Task Task { get; set; }
         public string TaskStatus { get; set; }
+        
     }
 }

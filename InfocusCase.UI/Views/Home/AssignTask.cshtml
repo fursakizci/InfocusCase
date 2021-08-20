@@ -1,0 +1,152 @@
+﻿@model TaskModel
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div class="content d-flex flex-column">
+        <div class="col-md-6 m-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Add Task</h5>
+                </div>
+                <div class="card-body">
+                    <form class="w-500" asp-action="AssignTask" asp-controller="home" method="post">
+
+                        <input type="hidden" name="Id" value="@Model.Task.Id"/>
+                        <div class="mb-3">
+                            <label for="FirstName" class="form-label">Name</label>
+                            <input type="text" id="NameId" name="Name" class="form-control" value="@Model.Task.Name">
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="LastName" class="form-label">Description</label>
+                            <input type="text" id="DescriptionId" name="Description" class="form-control" value="@Model.Task.Description">
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="DateOfBirth" class="form-label">Deadline</label>
+                            <input type="text" class="form-control" name="Deadline" id="DeadlineId" value="@Model.Task.Deadline">
+                        </div>
+
+                        @*<div class="mb-3">
+                                <label for="DateOfBirth" class="form-label">Date</label>
+                                <input type="text" class="form-control" name="BirthDate" id="DateOfBirth">
+                            </div>*@
+
+                        <button type="submit" (click)="add()" class="btn btn-primary w-100">Save</button>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="p-5">
+            <table id="customertable" class="table p-5">
+                <thead>
+                    <tr>
+                        <th>Assign</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.People)
+                    {
+                        
+                    <tr>
+                        <td><input type="checkbox" class="form-check-input checkbox" data-personid="@item.Id" @(Model.Task.PersonTasks.Any(i=>i.Person.Id==item.Id)? "checked": "")/></td>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        @*<td>@Html.DropDownList("StatusDrop", Model.Status, "Select Status", new { @class = "form-control" })</td>*@
+                    </tr>
+                    }
+
+
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+    <script>
+        $("#DeadlineId").datepicker({
+            format: "dd-mm-yyyy"
+        });
+
+
+            $(function () {
+                $('.checkbox').change(function ()
+                {
+                    var taskId = @Model.Task.Id;
+                    var personId = $(this).data('personid');
+                    //var checkbox = validateTerms();
+                    $.ajax({
+                        url: '/Home/AssignTaskToPerson',
+                        data: { taskId, personId },
+                        type: "POST",
+                        dataType: "Json",
+                        success: function (data)
+                        {
+                            console.log(data);
+                        }
+                    });
+                });
+            });
+
+        //function validateTerms()
+        //{
+        //    var c = $(this).document.getElementById('cid');
+        //    //var d = document.getElementById('terms_div');
+        //    if (c.checked)
+        //    {
+        //        //d.className = '';
+        //        return true;
+        //    } else
+        //    {
+        //        //d.className = 'terms_error';
+        //        return false;
+        //    }
+        //}
+
+        @*$(function () {
+            $('#StatusDrop').change(function ()
+                {
+                    var taskId = @Model.Task.Id;
+                    var personId = $(this).data('personid');
+                    var status = $('#StatusDrop').val();
+                    $.ajax({
+                        url: '/Home/AssignTaskToPerson',
+                        data: { taskId, personId, status },
+                        type: "POST",
+                        dataType: "Json",
+                        success: function (data)
+                        {
+                            console.log(data);
+                        }
+                    });
+                });
+            });*@
+
+    </script>
+
+
+</body>
+
+</html>

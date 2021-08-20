@@ -7,5 +7,6 @@ namespace InfocusCase.DataAccess.Abstract
 {
     public interface IPersonTaskDal:IEntityRepository<PersonTask>
     {
+        bool CheckAssignTaskToPerson(int personId, int taskId);
     }
 }

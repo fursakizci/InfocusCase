@@ -10,5 +10,7 @@ namespace InfocusCase.Business.Abstract
         void Add(Person person);
         Person GetById(int id);
         List<Person> GetAll();
+        Person GetAddress(int id);
+        Person PersonTaskList(int id);
     }
 }

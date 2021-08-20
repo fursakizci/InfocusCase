@@ -18,6 +18,10 @@ namespace InfocusCase.Business.Concrete
         {
             _personDal.Add(person);
         }
+        public Person GetAddress(int id)
+        {
+            return _personDal.GetAddress(id);
+        }
 
         public List<Person> GetAll()
         {
@@ -27,6 +31,11 @@ namespace InfocusCase.Business.Concrete
         public Person GetById(int id)
         {
             return _personDal.GetById(id);
+        }
+
+        public Person PersonTaskList(int id)
+        {
+            return _personDal.PersonTaskList(id);
         }
     }
 }

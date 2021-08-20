@@ -11,5 +11,6 @@ namespace InfocusCase.Entity.Concrete
         public int Id { get; set; }
         public string DistrictName { get; set; }
         public City City { get; set; }
+        public List<PersonAddress> PersonAddresses { get; set; }
     }
 }

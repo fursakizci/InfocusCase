@@ -32,12 +32,14 @@ namespace InfocusCase.UI
             services.AddScoped<ICityDal, EfCityDal>();
             services.AddScoped<IDistrictDal, EfDistrictDal>();
             services.AddScoped<IPersonAddressDal, EfPersonAddressDal>();
+            services.AddScoped<IPersonTaskDal, EfPersonTaskDal>();
 
             services.AddScoped<IPersonService, PersonManager>();
             services.AddScoped<ITaskService, TaskManager>();
             services.AddScoped<ICityService, CityManager>();
             services.AddScoped<IDistrictService, DistrictManager>();
             services.AddScoped<IPersonAddressService, PersonAddressManager>();
+            services.AddScoped<IPersonTaskService, PersonTaskManager>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddControllersWithViews();

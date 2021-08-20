@@ -1,7 +1,5 @@
 ﻿@model LocationModel
-@{
-    Layout = null;
-}
+
 
 <!DOCTYPE html>
 <html>
@@ -51,15 +49,6 @@
                             @Html.DropDownList("DistrictsDrop", Model.Districts, "Select District", new { @class = "form-control" })
                         </div>
 
-                        @*<div class="mb-3">
-                            <label for="CityId" class="form-label">CityId</label>
-                            <input type="text" class="form-control" name="CityId" id="DateOfBirth">
-                        </div>
-                        <div class="mb-3">
-                            <label for="DistrictId" class="form-label">DistrictId</label>
-                            <input type="text" class="form-control" name="DistrictId" id="DateOfBirth">
-                        </div>*@
-
                         <div class="mb-3">
                             <label for="Address" class="form-label">Address</label>
                             <input type="text" class="form-control" name="Address" id="Addressid">
@@ -86,20 +75,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(var item in Model.AddressModels)
+                    @foreach(var item in Model.Person.PersonAddresses)
             {
                     <tr>
                         <td>@item.AddressType</td>
                         <td>@item.Name</td>
-                        <td>@item.CityName</td>
-                        <td>@item.DistrictName</td>
+                        <td>@item.City.CityName</td>
+                        <td>@item.District.DistrictName</td>
                         <td>@item.Address</td>
                         <td> @Html.ActionLink("Update", "UpdatePerson", new { }, new { @class = "btn btn-primary" })</td>
                         <td> @Html.ActionLink("Delete", "DeletePerson", new { }, new { @class = "btn btn-danger" })</td>
 
                     </tr>
             }
-                    
 
                 </tbody>
 

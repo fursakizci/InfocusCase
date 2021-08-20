@@ -1,7 +1,5 @@
-﻿@model List<InfocusCase.Entity.Concrete.Task>  
-@{
-    Layout = null;
-}
+﻿@model List<InfocusCase.Entity.Concrete.Task>
+
 
 <!DOCTYPE html>
 <html>
@@ -28,27 +26,23 @@
                 <div class="card-body">
                     <form class="w-500" asp-action="TaskPage" asp-controller="home" method="post">
 
+                        <input type="hidden" name="Id"  />
                         <div class="mb-3">
                             <label for="FirstName" class="form-label">Name</label>
-                            <input type="text" id="NameId" name="Name" class="form-control">
+                            <input type="text" id="NameId" name="Name" class="form-control"/>
 
                         </div>
 
                         <div class="mb-3">
                             <label for="LastName" class="form-label">Description</label>
-                            <input type="text" id="DescriptionId" name="Description" class="form-control">
+                            <input type="text" id="DescriptionId" name="Description" class="form-control" />
 
                         </div>
 
                         <div class="mb-3">
                             <label for="DateOfBirth" class="form-label">Deadline</label>
-                            <input type="text" class="form-control" name="Deadline" id="DeadlineId">
+                            <input type="text" class="form-control" name="Deadline" id="DeadlineId" />
                         </div>
-
-                        @*<div class="mb-3">
-                            <label for="DateOfBirth" class="form-label">Date</label>
-                            <input type="text" class="form-control" name="BirthDate" id="DateOfBirth">
-                        </div>*@
 
                         <button type="submit" (click)="add()" class="btn btn-primary w-100">Save</button>
 
@@ -64,25 +58,26 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Deadline</th>
-                        <th>Update</th>
+                        <th>Assign And Update</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    @foreach(var item in Model)
-                {
+                    @foreach (var item in Model)
+                    {
                     <tr>
                         <td>@item.Name</td>
                         <td>@item.Description</td>
-                        <td> @Convert.ToString(item.Deadline)</td>
-                        <td> @Html.ActionLink("Update", "UpdateTask", new { }, new { @class = "btn btn-primary" })</td>
+                        <td> @item.Deadline.ToString("dd/M/yyyy")</td>
+                        <td> @Html.ActionLink("Assign And Update", "AssignTask", new { id = item.Id }, new { @class = "btn btn-light" })</td>
+                        @*<td> @Html.ActionLink("Update", "UpdateTask", new { }, new { @class = "btn btn-primary" })</td>*@
                         <td> @Html.ActionLink("Delete", "DeleteTask", new { }, new { @class = "btn btn-danger" })</td>
 
                     </tr>
-                }
+                    }
 
-                    
+
 
                 </tbody>
 
@@ -90,13 +85,12 @@
         </div>
 
     </div>
-    <script>
-        $("#DeadlineId").datepicker({
-            format: "yyyy-mm-dd"
-        });
-    </script>
-
 
 </body>
 
 </html>
+<script>
+    $("#DeadlineId").datepicker({
+        format: "yyyy-mm-dd"
+    });
+</script>

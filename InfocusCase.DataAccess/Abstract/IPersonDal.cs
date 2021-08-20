@@ -7,5 +7,7 @@ namespace InfocusCase.DataAccess.Abstract
 {
     public interface IPersonDal:IEntityRepository<Person>
     {
+        Person GetAddress(int id);
+        Person PersonTaskList(int id);
     }
 }

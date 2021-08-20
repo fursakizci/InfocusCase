@@ -1,4 +1,5 @@
 ﻿using InfocusCase.Business.Abstract;
+using InfocusCase.Business.Constants;
 using InfocusCase.Entity.Concrete;
 using InfocusCase.UI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -19,18 +20,22 @@ namespace InfocusCase.UI.Controllers
         private IPersonAddressService _personAddressService;
         private ICityService _cityService;
         private IDistrictService _districtService;
+        private IPersonTaskService _personTaskService;
+
         public HomeController(
             IPersonService personService,
             ITaskService taskService,
             IPersonAddressService personAddressService,
             ICityService cityService,
-            IDistrictService districtService)
+            IDistrictService districtService,
+            IPersonTaskService personTaskService)
         {
             _personService = personService;
             _taskService = taskService;
             _personAddressService = personAddressService;
             _cityService = cityService;
             _districtService = districtService;
+            _personTaskService = personTaskService;
         }
 
         [HttpGet]
@@ -46,9 +51,15 @@ namespace InfocusCase.UI.Controllers
             {
                 return View(_personService.GetAll());
             }
-            //TempData["personalId"] = person
+            
             _personService.Add(person);
             return View(_personService.GetAll());
+        }
+
+        public IActionResult TaskListByPerson(int personId)
+        {
+            
+            return View();
         }
 
         [HttpGet]
@@ -71,21 +82,7 @@ namespace InfocusCase.UI.Controllers
             locationModel.Cities = new SelectList(_cityService.GetAll(), "Id", "CityName");
             locationModel.Districts = new SelectList(new List<District>(), "Id", "DistrictName");
             ViewData["personId"] = id;
-            var targetList = _personAddressService.GetAll();
-                //.Select(x => new AddressModel()
-                //{
-                //    CityName = _cityService.GetById(x.City.Id).CityName
-                //}).ToList();
-            
-            //locationModel.AddressModels = _personAddressService.GetAll().
-            //    Select(x => new AddressModel()
-            //    {
-            //        Address = x.Address,
-            //        Name = x.Name,
-            //        AddressType = x.AddressType,
-            //        CityName = x.City.CityName,
-            //        DistrictName = x.District.DistrictName
-            //    }).ToList();
+            locationModel.Person = _personService.GetAddress(id);
             return View(locationModel);
         }
 
@@ -106,14 +103,48 @@ namespace InfocusCase.UI.Controllers
                 District = _districtService.GetById(addressModel.DistrictsDrop),
                 Person = _personService.GetById(addressModel.PersonalId)
             });
-            List<PersonAddress> personAddresses = _personAddressService.GetAll();
+            
             List<City> cities = _cityService.GetAll();
             return RedirectToAction("AddressPage","Home");
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult AssignTask(int id)
         {
-            return View();
+            var deneme = _personService.PersonTaskList(id);
+            TaskModel taskModel =new TaskModel();
+            taskModel.People = _personService.GetAll();
+            
+            taskModel.Status = new SelectList(StatusMessages.Status);
+            taskModel.Task = _taskService.CheckExist(id);
+            taskModel.Task.Deadline.ToString("dd/MM/yyyy");
+            return View(taskModel);
+        }
+
+        public JsonResult AssignTaskToPerson(int taskId,int personId,bool checkbox)
+        {
+            var deneme = _personService.PersonTaskList(personId);
+            
+            if (_personTaskService.CheckAssignTaskToPerson(personId,taskId))
+            {
+
+            }
+            PersonTask personTask = new PersonTask
+            {
+                Person = _personService.GetById(personId),
+                Task = _taskService.GetById(taskId) 
+            };
+            _personTaskService.Add(personTask);
+
+            return Json(personId);
+        }
+
+        [HttpPost]
+        public IActionResult AssignTask(InfocusCase.Entity.Concrete.Task task)
+        {
+            TaskModel taskModel = new TaskModel();
+            _taskService.Update(task);
+            return RedirectToAction("TaskPage","home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

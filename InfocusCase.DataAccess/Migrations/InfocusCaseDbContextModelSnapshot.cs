@@ -163,7 +163,7 @@ namespace InfocusCase.DataAccess.Migrations
             modelBuilder.Entity("InfocusCase.Entity.Concrete.District", b =>
                 {
                     b.HasOne("InfocusCase.Entity.Concrete.City", "City")
-                        .WithMany()
+                        .WithMany("Districts")
                         .HasForeignKey("CityId");
 
                     b.Navigation("City");
@@ -172,15 +172,15 @@ namespace InfocusCase.DataAccess.Migrations
             modelBuilder.Entity("InfocusCase.Entity.Concrete.PersonAddress", b =>
                 {
                     b.HasOne("InfocusCase.Entity.Concrete.City", "City")
-                        .WithMany()
+                        .WithMany("PersonAddresses")
                         .HasForeignKey("CityId");
 
                     b.HasOne("InfocusCase.Entity.Concrete.District", "District")
-                        .WithMany()
+                        .WithMany("PersonAddresses")
                         .HasForeignKey("DistrictId");
 
                     b.HasOne("InfocusCase.Entity.Concrete.Person", "Person")
-                        .WithMany()
+                        .WithMany("PersonAddresses")
                         .HasForeignKey("PersonId");
 
                     b.Navigation("City");
@@ -193,16 +193,40 @@ namespace InfocusCase.DataAccess.Migrations
             modelBuilder.Entity("InfocusCase.Entity.Concrete.PersonTask", b =>
                 {
                     b.HasOne("InfocusCase.Entity.Concrete.Person", "Person")
-                        .WithMany()
+                        .WithMany("PersonTasks")
                         .HasForeignKey("PersonId");
 
                     b.HasOne("InfocusCase.Entity.Concrete.Task", "Task")
-                        .WithMany()
+                        .WithMany("PersonTasks")
                         .HasForeignKey("TaskId");
 
                     b.Navigation("Person");
 
                     b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("InfocusCase.Entity.Concrete.City", b =>
+                {
+                    b.Navigation("Districts");
+
+                    b.Navigation("PersonAddresses");
+                });
+
+            modelBuilder.Entity("InfocusCase.Entity.Concrete.District", b =>
+                {
+                    b.Navigation("PersonAddresses");
+                });
+
+            modelBuilder.Entity("InfocusCase.Entity.Concrete.Person", b =>
+                {
+                    b.Navigation("PersonAddresses");
+
+                    b.Navigation("PersonTasks");
+                });
+
+            modelBuilder.Entity("InfocusCase.Entity.Concrete.Task", b =>
+                {
+                    b.Navigation("PersonTasks");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,5 +15,6 @@ namespace InfocusCase.Entity.Concrete
         public City City { get; set; }
         public District District { get; set; }
         public string Address { get; set; }
+        
     }
 }

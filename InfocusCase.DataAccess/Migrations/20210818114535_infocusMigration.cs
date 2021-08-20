@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InfocusCase.DataAccess.Migrations
 {
-    public partial class InFocusmigrations : Migration
+    public partial class infocusMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
