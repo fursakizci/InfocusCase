@@ -111,7 +111,6 @@ namespace InfocusCase.UI.Controllers
         [HttpGet]
         public IActionResult AssignTask(int id)
         {
-            var deneme = _personService.PersonTaskList(id);
             TaskModel taskModel =new TaskModel();
             taskModel.People = _personService.GetAll();
             
@@ -123,9 +122,8 @@ namespace InfocusCase.UI.Controllers
 
         public JsonResult AssignTaskToPerson(int taskId,int personId)
         {
-            var deneme = _personService.CheckTaskListForPerson(personId,taskId);
-
-            if (deneme)
+           
+            if (_personService.CheckTaskListForPerson(personId, taskId))
             {
                 _personTaskService.Delete(_personTaskService.GetPersonTaskById(personId, taskId));
             }
