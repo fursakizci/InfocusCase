@@ -12,5 +12,6 @@ namespace InfocusCase.Business.Abstract
         List<Person> GetAll();
         Person GetAddress(int id);
         Person PersonTaskList(int id);
+        bool CheckTaskListForPerson(int personId, int taskId);
     }
 }

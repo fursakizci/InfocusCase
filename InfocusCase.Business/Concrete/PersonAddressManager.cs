@@ -1,7 +1,6 @@
 ﻿using InfocusCase.Business.Abstract;
 using InfocusCase.DataAccess.Abstract;
 using InfocusCase.Entity.Concrete;
-using InfocusCase.Entity.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;

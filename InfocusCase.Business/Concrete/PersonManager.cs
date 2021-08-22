@@ -37,5 +37,10 @@ namespace InfocusCase.Business.Concrete
         {
             return _personDal.PersonTaskList(id);
         }
+
+        public bool CheckTaskListForPerson(int personId, int taskId)
+        {
+            return _personDal.CheckTaskListForPerson(personId,taskId);
+        }
     }
 }

@@ -1,0 +1,33 @@
+﻿@model InfocusCase.Entity.Concrete.Person 
+
+@{
+    ViewData["Title"] = "ShowPersonTaskList";
+}
+
+<table id="customertable" class="table p-5">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Deadline</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.PersonTasks)
+        {
+            <tr>
+                <td>@item.Task.Name</td>
+                <td>@item.Task.Description</td>
+                <td> @item.Task.Deadline.ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+<script>
+    $("#DeadlineId").datepicker({
+        format: "yyyy-mm-dd"
+    });
+</script>

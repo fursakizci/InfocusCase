@@ -36,7 +36,18 @@ namespace InfocusCase.DataAccess.Concrete.EntityFramework
                     .FirstOrDefault();
             }
         }
+        public bool CheckTaskListForPerson(int personId, int taskId)
+        {
+            using (var context = new InfocusCaseDbContext())
+            {
+                var result = context.People
+                    .Where(i => i.Id == personId)
+                    .Include(i => i.PersonTasks)
+                    .FirstOrDefault();
 
-       
+                return result.PersonTasks.Where(i => i.PersonId == personId && i.TaskId == taskId).Any();
+                
+            }
+        }
     }
 }

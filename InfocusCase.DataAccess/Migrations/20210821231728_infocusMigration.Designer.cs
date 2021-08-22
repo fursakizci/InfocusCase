@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InfocusCase.DataAccess.Migrations
 {
     [DbContext(typeof(InfocusCaseDbContext))]
-    [Migration("20210818114535_infocusMigration")]
+    [Migration("20210821231728_infocusMigration")]
     partial class infocusMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,10 +123,10 @@ namespace InfocusCase.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("PersonId")
+                    b.Property<int>("PersonId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TaskId")
+                    b.Property<int>("TaskId")
                         .HasColumnType("int");
 
                     b.Property<string>("TaskStatus")
@@ -196,11 +196,15 @@ namespace InfocusCase.DataAccess.Migrations
                 {
                     b.HasOne("InfocusCase.Entity.Concrete.Person", "Person")
                         .WithMany("PersonTasks")
-                        .HasForeignKey("PersonId");
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("InfocusCase.Entity.Concrete.Task", "Task")
                         .WithMany("PersonTasks")
-                        .HasForeignKey("TaskId");
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Person");
 

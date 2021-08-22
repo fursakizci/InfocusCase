@@ -9,5 +9,6 @@ namespace InfocusCase.DataAccess.Abstract
     {
         Person GetAddress(int id);
         Person PersonTaskList(int id);
+        bool CheckTaskListForPerson(int personId, int taskId);
     }
 }

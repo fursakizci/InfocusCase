@@ -121,20 +121,26 @@ namespace InfocusCase.UI.Controllers
             return View(taskModel);
         }
 
-        public JsonResult AssignTaskToPerson(int taskId,int personId,bool checkbox)
+        public JsonResult AssignTaskToPerson(int taskId,int personId)
         {
-            var deneme = _personService.PersonTaskList(personId);
-            
-            if (_personTaskService.CheckAssignTaskToPerson(personId,taskId))
+            var deneme = _personService.CheckTaskListForPerson(personId,taskId);
+
+            if (deneme)
             {
+                _personTaskService.Delete(_personTaskService.GetPersonTaskById(personId, taskId));
+            }
+
+            else 
+            { 
+                PersonTask personTask = new PersonTask
+                {
+                    Person = _personService.GetById(personId),
+                    Task = _taskService.GetById(taskId) 
+                };
+
+            _personTaskService.Add(personTask);
 
             }
-            PersonTask personTask = new PersonTask
-            {
-                Person = _personService.GetById(personId),
-                Task = _taskService.GetById(taskId) 
-            };
-            _personTaskService.Add(personTask);
 
             return Json(personId);
         }
@@ -145,6 +151,11 @@ namespace InfocusCase.UI.Controllers
             TaskModel taskModel = new TaskModel();
             _taskService.Update(task);
             return RedirectToAction("TaskPage","home");
+        }
+
+        public IActionResult ShowPersonTaskList(int id)
+        {
+            return View(_personService.PersonTaskList(id));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

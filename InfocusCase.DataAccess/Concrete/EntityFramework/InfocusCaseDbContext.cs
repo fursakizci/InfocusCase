@@ -13,6 +13,11 @@ namespace InfocusCase.DataAccess.Concrete.EntityFramework
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-AV372PO\SQLEXPRESS;Database=InfocusCaseDb;Trusted_Connection=true");
         }
 
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<PersonTask>().HasKey(c => new { c.PersonId, c.TaskId });
+        //}
+
         public DbSet<Person> People { get; set; }
         public DbSet<PersonAddress> PersonAddresses { get; set; }
         public DbSet<PersonTask> PersonTasks { get; set; }

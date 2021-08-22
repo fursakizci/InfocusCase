@@ -20,5 +20,14 @@ namespace InfocusCase.DataAccess.Concrete.EntityFramework
                     .Any();
             }
         }
+
+        public PersonTask GetPersonTaskById(int personId , int taskId)
+        {
+            using (var context = new InfocusCaseDbContext())
+            {
+                return context.PersonTasks
+                    .Where(i => i.PersonId == personId && i.TaskId == taskId).FirstOrDefault();
+            }
+        }
     }
 }

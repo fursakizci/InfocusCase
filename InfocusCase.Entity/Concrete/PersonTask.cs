@@ -9,7 +9,9 @@ namespace InfocusCase.Entity.Concrete
     {
         [Key]
         public int Id { get; set; }
+        public int PersonId { get; set; }
         public Person Person { get; set; }
+        public int TaskId { get; set; }
         public Task Task { get; set; }
         public string TaskStatus { get; set; }
         
